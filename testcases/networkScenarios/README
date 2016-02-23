@@ -1,0 +1,3 @@
+There are totally four scenarios included in this folder.
+Each scenario consists a network topology, a MulVAL input and a MulVAL attack graph.
+Each MulVAL input basically describes the configuration of the network. For example, the installed software, vulnerability information and network reachability, etc.

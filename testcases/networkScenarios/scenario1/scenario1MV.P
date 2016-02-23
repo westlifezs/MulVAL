@@ -1,0 +1,98 @@
+/*enclave network (a medium sized network)*/
+
+attackerLocated(internet).
+attackGoal(execCode(workStation,_)).
+%attackGoal(execCode(fileServer,_)).
+attackGoal(execCode(mailServer,_)).
+attackGoal(execCode(subnet_1, _)).
+attackGoal(execCode(subnet_2, _)).
+
+/*Network connections*/
+hacl(internet, webServer, tcp, 80).
+hacl(webServer, mailServer, nfsProtocol, nfsPort).
+hacl(subnet_1, internet, httpProtocol, httpPort).
+hacl(subnet_2, internet, httpProtocol, httpPort).
+hacl(fileServer, internet, httpProtocol, httpPort).
+hacl(internet, fileServer, httpProtocol, httpPort).
+hacl(fileServer, workStation, nfsProtocol, nfsPort).
+
+
+hacl(webServer, internet,  _, _).
+hacl(mailServer, internet, _, _).
+%hacl(workStation, internet, _, _).
+%hacl(H,H,_,_).
+
+
+/* configuration information of mailServer */
+networkServiceInfo(mailServer, mountd, rpc, 100005, root).
+nfsExportInfo(mailServer, '/export', read, workStation).
+nfsExportInfo(mailServer, '/export', read, webServer).
+nfsExportInfo(mailServer, '/export', write, workStation).
+nfsExportInfo(mailServer, '/export', write, webServer).
+
+ 
+/* configuration information of webServer */ 
+vulExists(webServer, 'CAN-2002-0392', httpd).
+vulProperty('CAN-2002-0392', remoteExploit, privEscalation).
+networkServiceInfo(webServer , httpd, tcp , 80 , apache).
+
+
+/* configuration information of mailServer */
+%nfsMounted(workStation, '/usr/local/share', mailServer, '/export', read).
+
+/* configuration information of subnet_1 */
+vulExists(subnet_1,'CVE-2010-0483',windows_2000).
+vulProperty('CVE-2010-0483',remoteExploit,privEscalation).
+vulProperty('CVE-2010-0483',remoteClient,privEscalation).
+inCompetent(victim_1).
+hasAccount(victim_1, 'subnet_1', user).
+
+
+/* configuration information of subnet_2 */
+vulExists(subnet_2,'CVE-2010-0490',ie).
+vulProperty('CVE-2010-0490',remoteExploit,privEscalation).
+vulProperty('CVE-2010-0490',remoteClient,privEscalation).
+inCompetent(victim_2).
+hasAccount(victim_2, 'subnet_2', user).
+
+/* configuration information of fileServer */
+vulExists(fileServer,'CVE-2010-0812',windows_2003_server).
+vulProperty('CVE-2010-0812',remoteExploit,privEscalation).
+vulProperty('CVE-2010-0812',remoteClient,privEscalation).
+inCompetent(victim_3).
+hasAccount(victim_3, 'fileServer', user).
+
+
+/* configuration information of workStation */
+remote_client_vul_exists(workStation,acrobat).
+vulExists(workStation,'CVE-2010-0491',acrobat).
+vulProperty('CVE-2010-0491',remoteExploit,privEscalation).
+vulProperty('CVE-2010-0491',remoteClient,privEscalation).
+%inCompetent(victim_4).
+%hasAccount(victim_4, 'workStation', user).
+nfsExportInfo(workStation, '/export', write, fileServer).
+
+/*cvss metrics*/
+cvss('CAN-2002-0392',h).
+cvss('CVE-2010-0483',h).
+cvss('CVE-2010-0490',m).
+cvss('CVE-2009-2503',m).
+cvss('CVE-2010-0812',m).
+cvss('CVE-2010-0491',l).
+
+/*Client side applications*/
+isClient(windows_2003_server).
+isClient(windows_2000).
+isClient(firefox).
+isClient(office_word).
+isClient(itunes).
+isClient(acrobat).
+isClient(quicktime).
+isClient('.net_framework').
+isClient(office_frontpage).
+isClient(flash_player).
+isClient(adobe_air).
+isClient(compatibility_pack_word_excel_powerpoint).
+isClient(visual_basic).
+isClient(ie).
+isClient(excel).

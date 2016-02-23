@@ -1,0 +1,50 @@
+
+/*network connection*/
+attackerLocated(internet).
+hacl(victim1, internet, httpProtocol, httpPort).
+hacl(victim2, internet, httpProtocol, httpPort).
+hacl(victim3, internet, httpProtocol, httpPort).
+
+vulProperty('CVE-2010-0483',remoteExploit,privEscalation).
+vulProperty('CVE-2010-0483',remoteClient,privEscalation).
+vulProperty('CVE-2010-0490',remoteExploit,privEscalation).
+vulProperty('CVE-2010-0490',remoteClient,privEscalation).
+vulProperty('CVE-2009-2503',remoteExploit,privEscalation).
+vulProperty('CVE-2009-2503',remoteClient,privEscalation).
+
+vulExists(victim1,'CVE-2010-0483',windows_2000).
+vulExists(victim2,'CVE-2009-2503','.net_framework').
+vulExists(victim3,'CVE-2010-0490',ie).
+
+cvss('CVE-2010-0483',h).
+cvss('CVE-2010-0490',m).
+cvss('CVE-2009-2503',m).
+
+inCompetent(victim_1).
+inCompetent(victim_2).
+inCompetent(victim_3).
+hasAccount(victim_1, 'victim1', user).
+hasAccount(victim_2, 'victim2', user).
+hasAccount(victim_3, 'victim3', user).
+
+/*attack goals*/
+attackGoal(execCode(victim1, _)).
+attackGoal(execCode(victim2, _)).
+attackGoal(execCode(victim3, _)).
+
+/*Client side applications*/
+isClient(windows_2000).
+isClient(firefox).
+isClient(office_word).
+isClient(itunes).
+isClient(acrobat).
+isClient(quicktime).
+isClient('.net_framework').
+isClient(office_frontpage).
+isClient(flash_player).
+isClient(adobe_air).
+isClient(compatibility_pack_word_excel_powerpoint).
+isClient(visual_basic).
+isClient(ie).
+isClient(excel).
+isClient(windows_server_2003).

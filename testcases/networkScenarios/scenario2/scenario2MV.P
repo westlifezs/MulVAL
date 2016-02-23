@@ -1,0 +1,126 @@
+/*enclave network II (a medium sized network)*/
+
+attackerLocated(internet). 
+attackGoal(execCode(workStation,_)).
+attackGoal(execCode(fileServer,_)).
+attackGoal(execCode(vpnServer,_)).
+attackGoal(execCode(dataHistorian, _)).
+attackGoal(execCode(webServer, _)).
+attackGoal(execCode(commServer, _)).
+attackGoal(execCode(citrixServer, _)).
+
+
+/*Network connections*/
+hacl(internet, webServer, tcp, 80).
+%hacl(webServer, mailServer, nfsProtocol, nfsPort).
+hacl(internet, vpnServer, httpProtocol, httpPort).
+hacl(internet, citrixServer, httpProtocol, httpPort).
+hacl(internet, commServer, httpProtocol, httpPort).
+hacl(fileServer, workStation, nfsProtocol, nfsPort).
+hacl(citrixServer, vpnServer, httpProtocol, httpPort).
+hacl(vpnServer, citrixServer, httpProtocol, httpPort).
+hacl(vpnServer, workStation, httpProtocol, httpPort).
+hacl(workStation, vpnServer, httpProtocol, httpPort).
+hacl(commServer, dataHistorian,httpProtocol, httpPort).
+hacl(dataHistorian, commServer,httpProtocol, httpPort).
+hacl(webServer, fileServer, httpProtocol, httpPort).
+hacl(fileServer, webServer, httpProtocol, httpPort).
+hacl(fileServer, workStation, httpProtocol, httpPort).
+hacl(workStation, fileServer, httpProtocol, httpPort).
+hacl(workStation, webServer, httpProtocol, httpPort).
+hacl(webServer, workStation, httpProtocol, httpPort).
+
+hacl(citrixServer, internet, httpProtocol, httpPort).
+hacl(commServer, internet, httpProtocol, httpPort).
+hacl(vpnServer, internet, httpProtocol, httpPort).
+hacl(webServer, internet, httpProtocol, httpPort).
+
+hacl(webServer, internet,  _, _).
+hacl(mailServer, internet, _, _).
+%hacl(workStation, internet, _, _).
+%hacl(H,H,_,_).
+
+/* configuration information of citrixServer */
+vulExists(citrixServer,'CVE-2010-0490',ie).
+vulProperty('CVE-2010-0490',remoteExploit,privEscalation).
+vulProperty('CVE-2010-0490',remoteClient,privEscalation).
+inCompetent(victim_2).
+hasAccount(victim_2, citrixServer, user).
+
+/* configuration information of commServer */
+vulExists(commServer,'CVE-2010-0483',windows_2000).
+vulProperty('CVE-2010-0483',remoteExploit,privEscalation).
+vulProperty('CVE-2010-0483',remoteClient,privEscalation).
+inCompetent(victim_1).
+hasAccount(victim_1, commServer, user).
+
+/* configuration information of vpnServer */
+vulExists(vpnServer,'CVE-2010-0492',openvpn).
+vulProperty('CVE-2010-0492',remoteExploit,privEscalation).
+vulProperty('CVE-2010-0492',remoteClient,privEscalation).
+inCompetent(victim_5).
+hasAccount(victim_5, 'vpnServer', user).
+
+/* configuration information of webServer */
+vulExists(webServer, 'CAN-2002-0392', httpd).
+vulProperty('CAN-2002-0392', remoteExploit, privEscalation).
+%networkServiceInfo(webServer , httpd, tcp , 80 , apache).
+isWebServer(webServer). 
+inCompetent(victim_7).
+hasAccount(victim_7, 'webServer', user).
+
+/* configuration information of dataHistorian */
+vulExists(dataHistorian,'CVE-2010-0494',mountd).
+vulProperty('CVE-2010-0494',remoteExploit,privEscalation).
+%vulProperty('CVE-2010-0494',remoteClient,privEscalation).
+%networkServiceInfo(webServer , httpd, tcp , 80 , apache).
+networkServiceInfo(dataHistorian, mountd, httpProtocol, httpPort, root).
+
+/* configuration information of fileServer */
+%remote_client_vul_exists(fileServer,windows_2003_server).
+vulExists(fileServer,'CVE-2010-0812',windows_2003_server).
+vulProperty('CVE-2010-0812',remoteExploit,privEscalation).
+vulProperty('CVE-2010-0812',remoteClient,privEscalation).
+inCompetent(victim_3).
+hasAccount(victim_3, 'fileServer', user).
+
+
+/* configuration information of workStation */
+%remote_client_vul_exists(workStation,acrobat).
+vulExists(workStation,'CVE-2010-0491',acrobat).
+vulProperty('CVE-2010-0491',remoteExploit,privEscalation).
+vulProperty('CVE-2010-0491',remoteClient,privEscalation).
+inCompetent(victim_4).
+hasAccount(victim_4, 'workStation', user).
+%nfsExportInfo(workStation, '/export', write, fileServer).
+
+/*cvss metrics*/
+cvss('CAN-2002-0392',h).
+cvss('CVE-2010-0483',h).
+cvss('CVE-2010-0490',m).
+cvss('CVE-2009-2503',m).
+cvss('CVE-2010-0812',m).
+cvss('CVE-2010-0491',l).
+cvss('CVE-2010-0492',m).
+cvss('CVE-2010-0493',m).
+cvss('CVE-2010-0494',m).
+
+/*Client side applications*/
+isClient(httpd).
+isClient(mountd).
+isClient(windows_2003_server).
+isClient(windows_2000).
+isClient(openvpn).
+isClient(firefox).
+isClient(office_word).
+isClient(itunes).
+isClient(acrobat).
+isClient(quicktime).
+isClient('.net_framework').
+isClient(office_frontpage).
+isClient(flash_player).
+isClient(adobe_air).
+isClient(compatibility_pack_word_excel_powerpoint).
+isClient(visual_basic).
+isClient(ie).
+isClient(excel).
