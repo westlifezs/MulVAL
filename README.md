@@ -2,7 +2,7 @@
 
 % Author : Su Zhang, Xinming (Simon) Ou
 
-% Copyright (c) 2011, Argus Cybersecurity Lab, Kansas State University
+% Copyright (c) 2016, Argus Cybersecurity Lab
 
 %MulVAL is an cybersecurity reasoning engine that can be applied on top of multiple contexts (cloud, IoT, enterprise network, etc )
 
@@ -207,7 +207,7 @@ USAGE:
 
 
 CONTACT:
-    For questions, please contact Xinming Ou at xou@ksu.edu
+    For questions, please contact Su Zhang at westlifezs@gmail.com or Xinming Ou at xou@usf.edu
 
 
 REFERENCES:
