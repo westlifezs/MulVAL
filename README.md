@@ -225,3 +225,7 @@ REFERENCES:
 [4] Lingyu Wang, Tania Islam, Tao Long, Anoop Singhal, and Sushil Jajodia. An attack graph-based
     probabilistic security metric. In Proceedings of The 22nd Annual IFIP WG 11.3 Working Conference
     on Data and Applications Security (DBSEC’08), 2008
+
+[5] Su Zhang, Xinwen Zhang, and Xinming Ou. After We Knew It: Empirical Study and Modeling of 
+    Cost-effectiveness of Exploiting Prevalent Known Vulnerabilities Across IaaS Cloud. In: Proceedings 
+    of the 9th ACM Symposium on Information, Computer and Communications Security (ASIACCS 14), 2014.
