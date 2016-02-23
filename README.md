@@ -1,5 +1,7 @@
 % Documentation for the MulVAL system
+
 % Author : Su Zhang, Xinming (Simon) Ou
+
 % Copyright (c) 2011, Argus Cybersecurity Lab, Kansas State University
 
 %MulVAL is an cybersecurity reasoning engine that can be applied on top of multiple contexts (cloud, IoT, enterprise network, etc )
